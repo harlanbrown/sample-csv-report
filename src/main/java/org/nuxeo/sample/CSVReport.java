@@ -28,7 +28,8 @@ public class CSVReport {
 
     public static final String ID = "Document.CSVReport";
 
-    public static final String DEFAULT_NXQL_QUERY = "SELECT * FROM Document WHERE ecm:mixinType = 'Picture' AND picture:views/*/title IS NULL";
+//    public static final String DEFAULT_NXQL_QUERY = "SELECT * FROM Document WHERE ecm:mixinType = 'Picture' AND picture:views/*/title IS NULL";
+    public static final String DEFAULT_NXQL_QUERY = "SELECT * FROM File";
 
     public String getNxqlQuery() {
         return nxqlQuery;

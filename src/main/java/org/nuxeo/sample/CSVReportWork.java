@@ -55,13 +55,13 @@ public class CSVReportWork extends AbstractWork {
         IterableQueryResult result = session.queryAndFetch(nxqlQuery, "NXQL");
 
         setStatus("Generating csv report");
-        log.info(result.size());
+        log.info("csv report will contain " + result.size() + " records");
         try {
             outputFile = Framework.createTempFile("report",".csv");
         } catch (IOException e) {
         }
 
-        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader("id", "name", "type").withRecordSeparator('\n');
+        CSVFormat csvFormat = CSVFormat.DEFAULT.withHeader("id", "name", "type","parentId").withRecordSeparator('\n');
 
         if (outputFile != null) {
             try ( 
@@ -75,8 +75,9 @@ public class CSVReportWork extends AbstractWork {
 
                     String docName = d.getProperty("dc:title").toString();
                     String docType = d.getType();
+                    String parentId = d.getParentRef().toString();
 
-                    csvPrinter.printRecord(docId,docName,docType);
+                    csvPrinter.printRecord(docId,docName,docType,parentId);
                 }
                 csvPrinter.flush();
                 csvPrinter.close();
@@ -85,7 +86,7 @@ public class CSVReportWork extends AbstractWork {
             }
             result.close();
             setStatus("Done");
-            log.info("csv report worker done,  file is at "+outputFile);
+            log.info("csv report worker done,  file is at " + outputFile);
         }
 
     }
